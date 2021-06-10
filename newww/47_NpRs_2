@@ -1,0 +1,75 @@
+/* author - Vinay J
+   organisation - Emertxe
+   title - WAP to take n and k (1 <= k <= 10) as inputs. Generate consecutive NRPS of length n using k distinct character (0 <= k <= 9) 
+   date - 24/06/2019 */
+
+#include<stdio.h>
+#include<stdlib.h>
+
+/* function definition */
+void string_NRPS (char *ptr, int length, int size)
+{
+	int offset = 0;
+	for (int i = 0; i < length ; i++)
+	{
+		if (i % size == 0 && i != 0)
+			++offset;
+
+		//offset = rand() % size;
+		printf("%c", *(ptr + ((i + offset) % size)));	
+	}
+	printf("\n");	
+}
+
+int main ()
+{
+	/* declarations */
+	char input;
+	int n, k;
+	do
+	{
+	/* total length */
+	printf("Enter value of n : ");
+	scanf("%d", &n);
+	
+	/* usable characters */
+	printf("Enter value of k : ");
+	scanf("%d", &k);
+	getchar();
+	
+	/* k must be between 1 and 10 */
+	if ((k < 1) || (k > 10))
+    {
+        printf("Error: K not in range. Try again\n");
+        return 1;
+    }
+	
+	/* to store the k unique characters in the array */
+	char array[k];
+
+	printf("Enter %d unique characters : \n", k);
+	for (int i = 0; i < k ; i++)
+	{
+		scanf("%c", &array[i]);
+		getchar();
+	}
+	
+	/* check for unique characters in the array */
+	for (int i = 0 ; i < k ; i++)
+		for (int j = (i + 1) ; j < k ; j++)
+			if (array[j] == array[i])
+			{
+				printf("Error : Characters are not unique.\n");
+				return 2;
+			}
+
+	/* funtion call */	
+	string_NRPS (array, n, k);
+
+	/* prompt for continue */
+	printf("Do u want to continue [y/n] : ");
+	scanf("%c", &input);
+	} while ( input == 'y' );
+
+	return 0;
+}
